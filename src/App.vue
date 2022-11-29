@@ -1,9 +1,22 @@
 <template>
-  <div id="app"></div>
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
 <script>
-export default {}
+export default {
+
+}
 </script>
 
-<style></style>
+<style lang="less">
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
