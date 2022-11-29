@@ -17,3 +17,15 @@ export const login = (data) => {
     data
   })
 }
+
+export const getUserInfoAPI = () => {
+  return service({
+    url: '/my/userinfo'
+  })
+}
+
+export const getMenusAPI = () => {
+  return service({
+    url: '/my/menus'
+  })
+}
