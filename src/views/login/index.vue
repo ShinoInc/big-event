@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { login } from '@/api'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'LoginView',
@@ -53,16 +53,13 @@ export default {
     }
   },
   methods: {
-    async login () {
-      this.$refs.lgnForm.validate(async (valid) => {
+    ...mapActions(['user/login']),
+    login () {
+      this.$refs.lgnForm.validate(async valid => {
         if (valid) {
           this.loading = true
-          const { code, message, token } = await login(this.lgnForm)
-          if (code === 0) {
-            localStorage.setItem('big-event-token', JSON.stringify(token))
-            this.$router.push('/')
-          }
-          this.$message(message)
+          await this['user/login'](this.lgnForm)
+          this.$router.push('/')
           this.loading = false
         }
       })

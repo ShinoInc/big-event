@@ -73,8 +73,8 @@ export default {
     }
   },
   methods: {
-    async register () {
-      this.$refs.regForm.validate(async (valid) => {
+    register () {
+      this.$refs.regForm.validate(async valid => {
         if (valid) {
           this.loading = true
           const { code, message } = await register(this.regForm)

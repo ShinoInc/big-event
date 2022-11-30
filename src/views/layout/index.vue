@@ -7,38 +7,43 @@
 
       <!-- 右侧的菜单 -->
 
-        <!-- 个人中心 -->
+      <!-- 个人中心 -->
 
-        <!-- 退出登录 -->
+      <!-- 退出登录 -->
 
     </el-header>
     <el-container>
       <!-- 左侧边栏的用户信息 -->
       <el-aside width="200px">
         <div class="user-box">
-          <img src="../../assets/images/head.png" alt=""  />
+          <img src="../../assets/images/head.png" alt="" />
           <span>欢迎博学谷用户</span>
         </div>
         <!-- 左侧导航菜单 -->
-        <el-menu
-          :default-active="$route.path"
-          class="el-menu-vertical-demo"
-          background-color="#23262E"
-          text-color="#fff"
-          active-text-color="#409EFF"
-          unique-opened
-          router
-        >
-           <!-- 不包含子菜单的“一级菜单” -->
-           <el-menu-item style="padding-left:35px;font-size:15px" >
-             <i class="el-icon-s-home"></i>
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo" background-color="#23262E"
+          text-color="#fff" active-text-color="#409EFF" unique-opened router>
+          <!-- 不包含子菜单的“一级菜单” -->
+          <el-menu-item index="/home">
+            <i class="el-icon-s-home"></i>
             <span>首页</span>
-           </el-menu-item>
+          </el-menu-item>
 
-            <!-- 包含子菜单的“一级菜单” -->
-
-             <!-- 循环渲染“二级菜单” -->
-
+          <!-- 包含子菜单的“一级菜单” -->
+          <el-submenu index="JavaScript:;">
+            <!-- 循环渲染“二级菜单” -->
+            <template #title>
+              <i class="el-icon-s-home"></i>
+              <span>文章管理</span>
+            </template>
+            <el-menu-item index="/cate">
+              <i class="el-icon-s-home"></i>
+              <span>文章分类</span>
+            </el-menu-item>
+            <el-menu-item index="/article">
+              <i class="el-icon-s-home"></i>
+              <span>文章列表</span>
+            </el-menu-item>
+          </el-submenu>
         </el-menu>
       </el-aside>
 
@@ -77,20 +82,24 @@ export default {
 <style lang="less" scoped>
 .main-container {
   height: 100%;
+
   .el-header,
   .el-aside {
     background-color: #23262e;
   }
+
   .el-header {
     padding: 0;
     display: flex;
     justify-content: space-between;
   }
+
   .el-main {
     overflow-y: scroll;
     height: 0;
     background-color: #f2f2f2;
   }
+
   .el-footer {
     background-color: #eee;
     font-size: 12px;
@@ -118,6 +127,7 @@ export default {
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
   user-select: none;
+
   img {
     width: 35px;
     height: 35px;
@@ -126,6 +136,7 @@ export default {
     margin-right: 15px;
     object-fit: cover;
   }
+
   span {
     color: white;
     font-size: 12px;
@@ -134,10 +145,21 @@ export default {
 
 // 侧边栏菜单的样式
 .el-aside {
+
   .el-submenu,
   .el-menu-item {
     width: 200px;
     user-select: none;
+  }
+
+  /deep/ .el-menu-item,
+  /deep/ .el-submenu__title {
+    padding-left: 35px !important;
+    font-size: 15px;
+  }
+
+  /deep/ .el-menu--inline .el-menu-item {
+    padding-left: 50px !important;
   }
 }
 </style>
