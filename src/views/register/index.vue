@@ -1,6 +1,6 @@
 <template>
   <div id="register">
-    <el-image class="logo" :src="require('@/assets/images/logo.png')" fit="contain"></el-image>
+    <el-image class="logo" :src="require('@/assets/images/login_logo.png')" fit="contain"></el-image>
     <el-card class="reg-card" shadow="always">
       <h2>后台管理系统</h2>
       <p class="link">
@@ -11,19 +11,19 @@
           <template #label>
             <span class="iptLabel">用户名</span>
           </template>
-          <el-input type="text" v-model="regForm.username" placeholder="请输入用户名" name="username"></el-input>
+          <el-input type="text" v-model="regForm.username" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <template #label>
             <span class="iptLabel">密码</span>
           </template>
-          <el-input type="password" v-model="regForm.password" placeholder="请输入密码" name="password"></el-input>
+          <el-input type="password" v-model="regForm.password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item prop="repassword">
           <template #label>
             <span class="iptLabel">密码</span>
           </template>
-          <el-input type="password" v-model="regForm.repassword" placeholder="请再次输入密码" name="repassword"></el-input>
+          <el-input type="password" v-model="regForm.repassword" placeholder="请再次输入密码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button class="btnSubmit" type="primary" :loading="loading" @click="register">注册</el-button>

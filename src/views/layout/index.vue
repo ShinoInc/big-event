@@ -32,15 +32,15 @@
           <el-submenu index="JavaScript:;">
             <!-- 循环渲染“二级菜单” -->
             <template #title>
-              <i class="el-icon-s-home"></i>
+              <i class="el-icon-menu"></i>
               <span>文章管理</span>
             </template>
             <el-menu-item index="/cate">
-              <i class="el-icon-s-home"></i>
+              <i class="el-icon-s-order"></i>
               <span>文章分类</span>
             </el-menu-item>
             <el-menu-item index="/article">
-              <i class="el-icon-s-home"></i>
+              <i class="el-icon-medal"></i>
               <span>文章列表</span>
             </el-menu-item>
           </el-submenu>

@@ -21,8 +21,8 @@ export default {
     }
   },
   actions: {
-    async getArticleList (context, data) {
-      const articleList = await getArticleList(data)
+    async getArticleList (context, params) {
+      const articleList = await getArticleList(params)
       context.commit('setArticleList', articleList)
     },
     getArticleTotal (context, articleTotal) {

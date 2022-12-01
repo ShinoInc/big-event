@@ -4,22 +4,21 @@
       <div slot="header" style="overflow: hidden;">
         <span style="font-size: 16px;font-weight: 500;line-height: 40px;">文章列表</span>
       </div>
-      <el-form ref="screen" :inline="true" :model="screen" class="demo-form-inline">
-        <el-form-item label="文章分类">
-          <el-select v-model="screen.cate_id" placeholder="请选择分类">
-            <el-option label="已发布" value="已发布"></el-option>
-            <el-option label="草稿" value="草稿"></el-option>
+      <el-form ref="srcForm" :inline="true" :model="params" class="demo-form-inline">
+        <el-form-item label="文章分类" prop="cate_id">
+          <el-select v-model="params.cate_id" placeholder="请选择分类">
+            <el-option v-for="cate in cateList" :key="cate.id" :label="cate.cate_name" :value="cate.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="发布状态">
-          <el-select v-model="screen.state" placeholder="请选择状态">
+        <el-form-item label="发布状态" prop="state">
+          <el-select v-model="params.state" placeholder="请选择状态">
             <el-option label="已发布" value="已发布"></el-option>
             <el-option label="草稿" value="草稿"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button class="scrBtn" type="primary" @click="onSubmit">筛选</el-button>
-          <el-button class="scrBtn" type="info" @click="resetForm">重置</el-button>
+          <el-button class="scrBtn" type="primary" @click="submitForm('srcForm')">筛选</el-button>
+          <el-button class="scrBtn" type="info" @click="resetForm('srcForm')">重置</el-button>
         </el-form-item>
         <el-button class="addBtn" type="primary">发表文章</el-button>
       </el-form>
@@ -39,7 +38,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination :page-size="pagesize" :total="articleTotal" :current-page="pagenum"
+      <el-pagination :page-size="params.pagesize" :total="articleTotal" :current-page="params.pagenum"
         layout="total, sizes, prev, pager, next, jumper" :page-sizes="[10, 20, 30, 40]" @size-change="handleSizeChange"
         @current-change="handleCurrentChange" style="padding: 30px 5px 0;">
       </el-pagination>
@@ -54,30 +53,35 @@ export default {
   name: 'ArticleView',
   data () {
     return {
-      pagesize: 10,
-      pagenum: 1,
-      cate_id: '',
-      state: '',
-      screen: {
+      params: {
+        pagesize: 10,
+        pagenum: 1,
         cate_id: '',
         state: ''
       }
     }
   },
   async created () {
+    await this['cate/getCateList']()
     await this.getArticleList()
   },
   computed: {
-    ...mapGetters(['articleList', 'articleTotal'])
+    ...mapGetters(['cateList', 'articleList', 'articleTotal'])
   },
   methods: {
-    ...mapActions(['article/getArticleList']),
-    onSubmit () {
-      console.log('submit!')
+    ...mapActions(['cate/getCateList', 'article/getArticleList']),
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
-    resetForm () {
-      console.log(this.$refs.screen.$el.innerText)
-      this.$refs.screen.resetFields()
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
     },
     handleEdit (index, row) {
       console.log(index, row)
@@ -86,10 +90,10 @@ export default {
       console.log(index, row)
     },
     async getArticleList () {
-      await this['article/getArticleList']({
-        pagenum: this.pagenum,
-        pagesize: this.pagesize
-      })
+      const params = this.params
+      params.cate_id === '' && delete params.cate_id
+      params.state === '' && delete params.state
+      await this['article/getArticleList'](params)
     },
     async handleSizeChange (val) {
       this.pagesize = val
@@ -117,11 +121,16 @@ export default {
     color: rgba(0, 0, 0, 0.26);
   }
 
-  .el-select-dropdown__item.hover,
-  .el-select-dropdown__item:hover {
-    background-color: #ECF2FE;
-    color: #0052D9;
+  /deep/ .el-input.el-input--suffix.is-focus .el-input__inner {
+    border-color: #0052D9;
+    color: rgba(0, 0, 0, 0.90);
   }
+}
+
+.el-select-dropdown__item.hover,
+.el-select-dropdown__item:hover {
+  background-color: #ECF2FE;
+  color: #0052D9;
 }
 
 .scrBtn {

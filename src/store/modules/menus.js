@@ -1,4 +1,4 @@
-import { getMenusAPI } from '@/api'
+import { getMenus } from '@/api'
 
 export default {
   namespaced: true,
@@ -15,7 +15,7 @@ export default {
   },
   actions: {
     async getMenus (context) {
-      const menus = await getMenusAPI()
+      const menus = await getMenus()
       context.commit('setMenus', menus)
     }
   }

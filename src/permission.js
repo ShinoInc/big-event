@@ -16,7 +16,8 @@ router.beforeEach(async (to, from, next) => {
   } else {
     if (whiteList.includes(to.path)) {
       next()
+    } else {
+      next('/login')
     }
-    next('/login')
   }
 })

@@ -19,7 +19,7 @@ export const login = (data) => {
   })
 }
 
-export const getUserInfoAPI = () => {
+export const getUserInfo = () => {
   return service({
     url: '/my/userinfo'
   })
@@ -31,6 +31,32 @@ export const getCateList = () => {
   })
 }
 
+export const addCate = (data) => {
+  return service({
+    url: '/my/cate/add',
+    method: 'post',
+    data
+  })
+}
+
+export const infoCate = (data) => {
+  return service({
+    url: '/my/cate/info',
+    method: 'put',
+    data
+  })
+}
+
+export const delCate = (id) => {
+  return service({
+    url: '/my/cate/del',
+    method: 'delete',
+    params: {
+      id
+    }
+  })
+}
+
 export const getArticleList = (params) => {
   return service({
     url: '/my/article/list',
@@ -38,7 +64,7 @@ export const getArticleList = (params) => {
   })
 }
 
-export const getMenusAPI = () => {
+export const getMenus = () => {
   return service({
     url: '/my/menus'
   })

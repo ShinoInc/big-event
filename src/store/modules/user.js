@@ -1,5 +1,5 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { login, getUserInfoAPI } from '@/api'
+import { login, getUserInfo } from '@/api'
 
 export default {
   namespaced: true,
@@ -29,7 +29,7 @@ export default {
       context.commit('setToken', token)
     },
     async getUserInfo (context) {
-      const userInfo = await getUserInfoAPI()
+      const userInfo = await getUserInfo()
       context.commit('setUserInfo', userInfo)
     },
     logout (context) {
