@@ -115,16 +115,20 @@ export default {
           left: 'center', // 位置居中
           top: '10' // 标题距离容器顶部px
         },
-        tooltip: { // 提示框组件
+        tooltip: {
+          // 提示框组件
           trigger: 'axis' // 坐标轴触发(鼠标放在坐标轴就能出提示框)
         },
-        legend: { // 图例组件(每种颜色的意思)
+        legend: {
+          // 图例组件(每种颜色的意思)
           data: ['新增文章'], // 图例文字解释(要和series里name对应)
           top: '40' // 距离容器顶部px
         },
-        toolbox: { // 工具栏
+        toolbox: {
+          // 工具栏
           show: true, // 要显示
-          feature: { // 各工具配置项
+          feature: {
+            // 各工具配置项
             mark: { show: true }, // 辅助线开关
             dataView: { show: true, readOnly: false }, // 数据视图工具，可以展现当前图表所用的数据，编辑后可以动态更新。
             magicType: { show: true, type: ['line', 'bar'] }, // 动态类型切换
@@ -132,7 +136,8 @@ export default {
             saveAsImage: { show: true } // 点击保存下载图片
           }
         },
-        xAxis: [ // 水平轴显示
+        xAxis: [
+          // 水平轴显示
           {
             name: '日',
             type: 'category',
@@ -140,13 +145,15 @@ export default {
             data: aDate // 水平轴上的数字数据 (时间)
           }
         ],
-        yAxis: [ // 垂直轴显示
+        yAxis: [
+          // 垂直轴显示
           {
             name: '月新增文章数',
             type: 'value' // 以series里的data值做划分段
           }
         ],
-        series: [ // 系列(控制图表类型和数据)
+        series: [
+          // 系列(控制图表类型和数据)
           {
             name: '新增文章',
             type: 'line', // 折线图
@@ -156,7 +163,8 @@ export default {
             data: aCount // 真正数据源(用下标和x轴数组对应)
           }
         ],
-        grid: { // 直角坐标系内绘图网格
+        grid: {
+          // 直角坐标系内绘图网格
           show: true,
           x: 50, // grid 组件离容器偏移量, 左侧
           x2: 50, // 右侧
@@ -185,12 +193,14 @@ export default {
           // d: 百分比 (只有饼状图生效)
         },
         color: ['#5885e8', '#13cfd5', '#00ce68', '#ff9565'], // 系列颜色
-        legend: { // 图例组件
+        legend: {
+          // 图例组件
           x: 'center',
           top: 65,
           data: ['奇趣事', '会生活', '爱旅行', '趣美味'] // 每个部分对应的数据名(要和series里name对应)
         },
-        toolbox: { // 工具箱
+        toolbox: {
+          // 工具箱
           show: true,
           x: 'center',
           top: 35,
@@ -317,7 +327,8 @@ export default {
           y: 80,
           height: 260
         },
-        dataZoom: [ // 给x轴设置滚动条
+        dataZoom: [
+          // 给x轴设置滚动条
           {
             start: 0, // 默认为0
             end: 100 - 1000 / 31, // 默认为100
@@ -367,7 +378,7 @@ export default {
   line-height: 50px;
   display: inline-block;
   margin: 10px 0 0 20px;
-  font-family: 'Arial';
+  font-family: "Arial";
   color: #83a2ed;
 }
 

@@ -39,11 +39,19 @@ export const addCate = (data) => {
   })
 }
 
-export const infoCate = (data) => {
+export const infoCate = ({ id, method, data }) => {
+  if (method === 'put') {
+    return service({
+      url: '/my/cate/info',
+      method,
+      data
+    })
+  }
   return service({
     url: '/my/cate/info',
-    method: 'put',
-    data
+    params: {
+      id
+    }
   })
 }
 
@@ -61,6 +69,39 @@ export const getArticleList = (params) => {
   return service({
     url: '/my/article/list',
     params
+  })
+}
+
+export const addArticle = (data) => {
+  return service({
+    url: '/my/article/add',
+    method: 'post',
+    data
+  })
+}
+
+export const infoArticle = ({ id, method, data }) => {
+  if (method === 'put') {
+    return service({
+      url: '/my/article/info',
+      method,
+      data
+    })
+  }
+  if (method === 'delete') {
+    return service({
+      url: '/my/article/info',
+      method,
+      params: {
+        id
+      }
+    })
+  }
+  return service({
+    url: '/my/article/info',
+    params: {
+      id
+    }
   })
 }
 

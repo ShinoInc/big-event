@@ -10,7 +10,6 @@
       <!-- 个人中心 -->
 
       <!-- 退出登录 -->
-
     </el-header>
     <el-container>
       <!-- 左侧边栏的用户信息 -->
@@ -20,8 +19,15 @@
           <span>欢迎博学谷用户</span>
         </div>
         <!-- 左侧导航菜单 -->
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo" background-color="#23262E"
-          text-color="#fff" active-text-color="#409EFF" unique-opened router>
+        <el-menu
+          :default-active="$route.path"
+          class="el-menu-vertical-demo"
+          background-color="#23262E"
+          text-color="#fff"
+          active-text-color="#409EFF"
+          unique-opened
+          router
+        >
           <!-- 不包含子菜单的“一级菜单” -->
           <el-menu-item index="/home">
             <i class="el-icon-s-home"></i>
@@ -43,6 +49,10 @@
               <i class="el-icon-medal"></i>
               <span>文章列表</span>
             </el-menu-item>
+            <el-menu-item index="/edit">
+              <i class="el-icon-star-off"></i>
+              <span>发表文章</span>
+            </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -63,19 +73,12 @@
 <script>
 export default {
   name: 'my-layout',
-  computed: {
-  },
+  computed: {},
   data () {
-    return {
-
-    }
+    return {}
   },
-  created () {
-
-  },
-  methods: {
-
-  }
+  created () {},
+  methods: {}
 }
 </script>
 
@@ -145,7 +148,6 @@ export default {
 
 // 侧边栏菜单的样式
 .el-aside {
-
   .el-submenu,
   .el-menu-item {
     width: 200px;

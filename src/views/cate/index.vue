@@ -1,9 +1,13 @@
 <template>
   <div id="cate">
     <el-card>
-      <div slot="header" style="overflow: hidden;">
-        <span style="font-size: 16px;font-weight: 500;line-height: 40px;">文章分类</span>
-        <el-button class="addBtn" type="primary" @click="handleAdd">添加分类</el-button>
+      <div slot="header" style="overflow: hidden">
+        <span style="font-size: 16px; font-weight: 500; line-height: 40px"
+          >文章分类</span
+        >
+        <el-button class="addBtn" type="primary" @click="handleAdd"
+          >添加分类</el-button
+        >
       </div>
       <el-table :data="cateList" border style="width: 100%">
         <el-table-column type="index" label="序号" width="130">
@@ -14,31 +18,55 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" class="chgBtn" @click="handleInfo(scope.row)">修改</el-button>
-            <el-button type="danger" class="chgBtn" @click="handleDel(scope.row)">删除</el-button>
+            <el-button
+              type="primary"
+              class="chgBtn"
+              @click="handleInfo(scope.row)"
+              >修改</el-button
+            >
+            <el-button
+              type="danger"
+              class="chgBtn"
+              @click="handleDel(scope.row)"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
     </el-card>
     <el-dialog :visible.sync="cateDialog">
       <div slot="title">
-        <p style="display: flex;align-items: center;line-height: 1;">
+        <p style="display: flex; align-items: center; line-height: 1">
           <i class="el-icon-info"></i>
           <span>{{ dialogTitle }}</span>
         </p>
       </div>
-      <span v-if="isDel" style="margin-left: 32px;">确定要删除本条信息吗？</span>
-      <el-form v-else ref="addCate" :model="data" :rules="rules" label-width="auto">
+      <span v-if="isDel" style="margin-left: 32px">确定要删除本条信息吗？</span>
+      <el-form
+        v-else
+        ref="addCate"
+        :model="data"
+        :rules="rules"
+        label-width="auto"
+      >
         <el-form-item label="分类名称" prop="cate_name">
-          <el-input v-model="data.cate_name" placeholder="请输入名称"></el-input>
+          <el-input
+            v-model="data.cate_name"
+            placeholder="请输入名称"
+          ></el-input>
         </el-form-item>
         <el-form-item label="分类别名" prop="cate_alias">
-          <el-input v-model="data.cate_alias" placeholder="请输入别名"></el-input>
+          <el-input
+            v-model="data.cate_alias"
+            placeholder="请输入别名"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button class="dlgBtn" type="info" @click="cancel">取消</el-button>
-        <el-button class="dlgBtn" type="primary" @click="submitCate">{{ dialogFooter }}</el-button>
+        <el-button class="dlgBtn" type="primary" @click="submitCate">{{
+          dialogFooter
+        }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -65,12 +93,26 @@ export default {
       rules: {
         cate_name: [
           { required: true, message: '请输入分类名称', trigger: 'blur' },
-          { min: 1, max: 10, message: '分类名称长度应在1-10位字符之间，请重新输入', trigger: 'blur' }
+          {
+            min: 1,
+            max: 10,
+            message: '分类名称长度应在1-10位字符之间，请重新输入',
+            trigger: 'blur'
+          }
         ],
         cate_alias: [
           { required: true, message: '请输入分类别名', trigger: 'blur' },
-          { pattern: /^[A-Za-z0-9]+$/, message: '分类别名只能包含字母和数字，请重新输入', trigger: 'change' },
-          { min: 1, max: 15, message: '分类别名长度应在1-15位字符之间，请重新输入', trigger: 'blur' }
+          {
+            pattern: /^[A-Za-z0-9]+$/,
+            message: '分类别名只能包含字母和数字，请重新输入',
+            trigger: 'change'
+          },
+          {
+            min: 1,
+            max: 15,
+            message: '分类别名长度应在1-15位字符之间，请重新输入',
+            trigger: 'blur'
+          }
         ]
       }
     }
@@ -115,7 +157,7 @@ export default {
       this.$refs.addCate.resetFields()
     },
     addCate () {
-      this.$refs.addCate.validate(async valid => {
+      this.$refs.addCate.validate(async (valid) => {
         if (valid) {
           await addCate(this.data)
           this.cateDialog = false
@@ -125,11 +167,11 @@ export default {
       })
     },
     infoCate () {
-      this.$refs.addCate.validate(async valid => {
+      this.$refs.addCate.validate(async (valid) => {
         if (valid) {
           const data = this.data
           data.id = this.cate_id
-          await infoCate(data)
+          await infoCate({ method: 'put', data })
           this.cateDialog = false
           this.$refs.addCate.resetFields()
           await this['cate/getCateList']()
@@ -164,33 +206,33 @@ export default {
 }
 
 .el-button--primary {
-  background-color: #4F81FF;
-  border-color: #4F81FF;
+  background-color: #4f81ff;
+  border-color: #4f81ff;
 
   &:hover {
-    background-color: #608DFF;
-    border-color: #608DFF;
+    background-color: #608dff;
+    border-color: #608dff;
   }
 }
 
 .el-button--info {
-  background-color: #EAECF5;
-  border-color: #EAECF5;
-  color: rgba(0, 0, 0, 0.90);
+  background-color: #eaecf5;
+  border-color: #eaecf5;
+  color: rgba(0, 0, 0, 0.9);
 
   &:hover {
-    background-color: #F5F6FA;
-    border-color: #F5F6FA;
+    background-color: #f5f6fa;
+    border-color: #f5f6fa;
   }
 }
 
 .el-button--danger {
-  background-color: #F46C6C;
-  border-color: #F46C6C;
+  background-color: #f46c6c;
+  border-color: #f46c6c;
 
   &:hover {
-    background-color: #F38484;
-    border-color: #F38484;
+    background-color: #f38484;
+    border-color: #f38484;
   }
 }
 
@@ -207,16 +249,15 @@ export default {
     .el-icon-info {
       margin-right: 8px;
       font-size: 24px;
-      color: #4F81FF;
+      color: #4f81ff;
     }
 
     span {
       margin-bottom: 1px;
       font-size: 16px;
       font-weight: 500;
-      color: rgba(0, 0, 0, 0.90);
+      color: rgba(0, 0, 0, 0.9);
     }
-
   }
 
   .el-form-item {
@@ -225,8 +266,7 @@ export default {
 
   .el-form-item__label {
     font-size: 14px;
-    color: rgba(0, 0, 0, 0.90);
-
+    color: rgba(0, 0, 0, 0.9);
   }
 
   .el-input__inner {
