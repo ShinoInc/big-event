@@ -9,21 +9,30 @@ const service = axios.create({
 })
 
 service.interceptors.request.use(
-  config => {
+  (config) => {
     if (store.getters.token) {
       config.headers.Authorization = store.getters.token
     }
     return config
   },
-  error => {
+  (error) => {
     return Promise.reject(error)
   }
 )
 
 service.interceptors.response.use(
-  response => {
+  (response) => {
     const { code, message } = response.data
     if (code === 0) {
+      if (
+        ![
+          '获取用户基本信息成功！',
+          '获取文章分类列表成功！',
+          '获取文章列表成功！'
+        ].includes(message)
+      ) {
+        Message.success(message)
+      }
       if (response.data.token) {
         return response.data.token
       } else if (response.data.data) {
@@ -39,7 +48,7 @@ service.interceptors.response.use(
       return Promise.reject(new Error(message))
     }
   },
-  error => {
+  (error) => {
     if (error.response.status === 401) {
       store.dispatch('user/logout')
       router.push('/login')

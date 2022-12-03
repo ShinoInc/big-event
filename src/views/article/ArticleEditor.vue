@@ -47,6 +47,7 @@
           <el-upload
             action=""
             accept="image/*"
+            :on-remove="handleRemove"
             :on-change="onChange"
             :auto-upload="false"
             :file-list="fileList"
@@ -161,6 +162,9 @@ export default {
         this.editForm.cover_img = event.target.result
       }
     },
+    handleRemove (file, fileList) {
+      this.editForm.cover_img = ''
+    },
     onEditorBlur (quill) {},
     onEditorFocus (quill) {},
     onEditorReady (quill) {},
@@ -185,6 +189,7 @@ export default {
           } else {
             await addArticle(this.data)
           }
+          this.$router.push('/article')
         } else {
           return false
         }

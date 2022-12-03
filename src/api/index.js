@@ -25,6 +25,31 @@ export const getUserInfo = () => {
   })
 }
 
+export const putUserInfo = (data) => {
+  return service({
+    url: '/my/userinfo',
+    method: 'put',
+    data
+  })
+}
+
+export const updateAvatar = (avatar) => {
+  return service({
+    url: '/my/update/avatar',
+    method: 'patch',
+    data: {
+      avatar
+    }
+  })
+}
+export const updatePwd = (data) => {
+  return service({
+    url: '/my/updatepwd',
+    method: 'patch',
+    data
+  })
+}
+
 export const getCateList = () => {
   return service({
     url: '/my/cate/list'

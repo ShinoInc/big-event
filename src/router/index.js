@@ -23,15 +23,27 @@ const routes = [
       },
       {
         path: 'cate',
-        component: () => import('@/views/cate')
+        component: () => import('@/views/article/CateList')
       },
       {
         path: 'article',
-        component: () => import('@/views/article')
+        component: () => import('@/views/article/ArticleList')
       },
       {
         path: 'edit',
-        component: () => import('@/views/edit')
+        component: () => import('@/views/article/ArticleEditor')
+      },
+      {
+        path: 'userinfo',
+        component: () => import('@/views/user/UserInfo')
+      },
+      {
+        path: 'userpic',
+        component: () => import('@/views/user/UserPic')
+      },
+      {
+        path: 'userpwd',
+        component: () => import('@/views/user/UserPwd')
       }
     ]
   }

@@ -26,15 +26,15 @@
             }}</el-avatar>
             <span>个人中心</span>
           </template>
-          <el-menu-item>
+          <el-menu-item index="/userinfo">
             <svg-icon icon-class="user_info"></svg-icon>
             <span>基本资料</span>
           </el-menu-item>
-          <el-menu-item>
+          <el-menu-item index="/userpic">
             <svg-icon icon-class="user_pic"></svg-icon>
             <span>更换头像</span>
           </el-menu-item>
-          <el-menu-item>
+          <el-menu-item index="/userpwd">
             <svg-icon icon-class="user_pwd"></svg-icon>
             <span>重置密码</span>
           </el-menu-item>
@@ -98,15 +98,15 @@
               <svg-icon icon-class="user"></svg-icon>
               <span>个人中心</span>
             </template>
-            <el-menu-item>
+            <el-menu-item index="/userinfo">
               <svg-icon icon-class="user_info"></svg-icon>
               <span>基本资料</span>
             </el-menu-item>
-            <el-menu-item>
+            <el-menu-item index="/userpic">
               <svg-icon icon-class="user_pic"></svg-icon>
               <span>更换头像</span>
             </el-menu-item>
-            <el-menu-item>
+            <el-menu-item index="/userpwd">
               <svg-icon icon-class="user_pwd"></svg-icon>
               <span>重置密码</span>
             </el-menu-item>
