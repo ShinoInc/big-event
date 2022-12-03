@@ -6,17 +6,56 @@
       <img src="../../assets/images/logo.png" alt="" />
 
       <!-- 右侧的菜单 -->
+      <el-menu
+        mode="horizontal"
+        background-color="#23262E"
+        text-color="#FFFFFF"
+        active-text-color="#409EFF"
+        router
+      >
+        <!-- 个人中心 -->
+        <el-submenu index="TabUser">
+          <template #title>
+            <el-avatar
+              v-if="user_pic"
+              class="avatar"
+              :src="user_pic"
+            ></el-avatar>
+            <el-avatar v-else class="avatar">{{
+              nickname ? nickname : username
+            }}</el-avatar>
+            <span>个人中心</span>
+          </template>
+          <el-menu-item>
+            <svg-icon icon-class="user_info"></svg-icon>
+            <span>基本资料</span>
+          </el-menu-item>
+          <el-menu-item>
+            <svg-icon icon-class="user_pic"></svg-icon>
+            <span>更换头像</span>
+          </el-menu-item>
+          <el-menu-item>
+            <svg-icon icon-class="user_pwd"></svg-icon>
+            <span>重置密码</span>
+          </el-menu-item>
+        </el-submenu>
 
-      <!-- 个人中心 -->
-
-      <!-- 退出登录 -->
+        <!-- 退出登录 -->
+        <el-menu-item @click="logout">
+          <svg-icon icon-class="logout"></svg-icon>
+          <span>退出</span>
+        </el-menu-item>
+      </el-menu>
     </el-header>
     <el-container>
       <!-- 左侧边栏的用户信息 -->
       <el-aside width="200px">
         <div class="user-box">
-          <img src="../../assets/images/head.png" alt="" />
-          <span>欢迎博学谷用户</span>
+          <el-avatar v-if="user_pic" class="avatar" :src="user_pic"></el-avatar>
+          <el-avatar v-else class="avatar">{{
+            nickname ? nickname : username
+          }}</el-avatar>
+          <span>欢迎 {{ nickname ? nickname : username }}</span>
         </div>
         <!-- 左侧导航菜单 -->
         <el-menu
@@ -30,28 +69,46 @@
         >
           <!-- 不包含子菜单的“一级菜单” -->
           <el-menu-item index="/home">
-            <i class="el-icon-s-home"></i>
+            <svg-icon icon-class="home"></svg-icon>
             <span>首页</span>
           </el-menu-item>
 
           <!-- 包含子菜单的“一级菜单” -->
-          <el-submenu index="JavaScript:;">
+          <el-submenu index="Article">
             <!-- 循环渲染“二级菜单” -->
             <template #title>
-              <i class="el-icon-menu"></i>
+              <svg-icon icon-class="article"></svg-icon>
               <span>文章管理</span>
             </template>
             <el-menu-item index="/cate">
-              <i class="el-icon-s-order"></i>
+              <svg-icon icon-class="article_cate"></svg-icon>
               <span>文章分类</span>
             </el-menu-item>
             <el-menu-item index="/article">
-              <i class="el-icon-medal"></i>
+              <svg-icon icon-class="article_list"></svg-icon>
               <span>文章列表</span>
             </el-menu-item>
             <el-menu-item index="/edit">
-              <i class="el-icon-star-off"></i>
+              <svg-icon icon-class="article_info"></svg-icon>
               <span>发表文章</span>
+            </el-menu-item>
+          </el-submenu>
+          <el-submenu index="User">
+            <template #title>
+              <svg-icon icon-class="user"></svg-icon>
+              <span>个人中心</span>
+            </template>
+            <el-menu-item>
+              <svg-icon icon-class="user_info"></svg-icon>
+              <span>基本资料</span>
+            </el-menu-item>
+            <el-menu-item>
+              <svg-icon icon-class="user_pic"></svg-icon>
+              <span>更换头像</span>
+            </el-menu-item>
+            <el-menu-item>
+              <svg-icon icon-class="user_pwd"></svg-icon>
+              <span>重置密码</span>
             </el-menu-item>
           </el-submenu>
         </el-menu>
@@ -71,14 +128,23 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'my-layout',
-  computed: {},
+  computed: {
+    ...mapGetters(['username', 'nickname', 'user_pic'])
+  },
   data () {
     return {}
   },
   created () {},
-  methods: {}
+  methods: {
+    ...mapActions(['user/logout']),
+    async logout () {
+      await this['user/logout']()
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 
@@ -113,12 +179,11 @@ export default {
 }
 
 .avatar {
-  border-radius: 50%;
+  margin-right: 10px;
   width: 35px;
   height: 35px;
-  background-color: #fff;
-  margin-right: 10px;
-  object-fit: cover;
+  font-size: 12px;
+  line-height: 35px;
 }
 
 // 左侧边栏用户信息区域
@@ -162,6 +227,20 @@ export default {
 
   /deep/ .el-menu--inline .el-menu-item {
     padding-left: 50px !important;
+  }
+}
+
+.svg-icon {
+  position: relative;
+  top: 5px;
+  width: 32px;
+  height: 24px;
+}
+
+.el-header {
+  /deep/ .el-menu-item,
+  /deep/ .el-submenu__title {
+    font-size: 15px;
   }
 }
 </style>
