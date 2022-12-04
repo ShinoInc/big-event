@@ -1,29 +1,85 @@
 <template>
   <div>
     <div class="container-fluid">
-      <el-row class="spannel_list" :gutter="10">
+      <el-row class="spannel_list">
         <el-col :sm="6" :xs="12">
           <div class="spannel">
-            <em>10015</em><span>篇</span>
-            <b>总文章数</b>
+            <div class="spannel_box">
+              <el-row type="flex">
+                <el-col>
+                  <em>10015</em>
+                  <b>总文章数</b>
+                </el-col>
+                <el-col>
+                  <div class="icon_box">
+                    <i
+                      class="el-icon-document-copy"
+                      style="font-size: 24px; color: #4f81ff; margin: 16px 0"
+                    ></i>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
           </div>
         </el-col>
         <el-col :sm="6" :xs="12">
           <div class="spannel scolor01">
-            <em>123</em><span>篇</span>
-            <b>日新增文章数</b>
+            <div class="spannel_box">
+              <el-row type="flex">
+                <el-col>
+                  <em>123</em>
+                  <b>日新增文章数</b>
+                </el-col>
+                <el-col>
+                  <div class="icon_box">
+                    <i
+                      class="el-icon-document"
+                      style="font-size: 24px; color: #4f81ff; margin: 16px 0"
+                    ></i>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
           </div>
         </el-col>
         <el-col :sm="6" :xs="12">
           <div class="spannel scolor02">
-            <em>35</em><span>条</span>
-            <b>评论总数</b>
+            <div class="spannel_box">
+              <el-row type="flex">
+                <el-col>
+                  <em>35</em>
+                  <b>评论总数</b>
+                </el-col>
+                <el-col>
+                  <div class="icon_box">
+                    <i
+                      class="el-icon-chat-line-square"
+                      style="font-size: 24px; color: #4f81ff; margin: 16px 0"
+                    ></i>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
           </div>
         </el-col>
         <el-col :sm="6" :xs="12">
           <div class="spannel scolor03">
-            <em>123</em><span>条</span>
-            <b>日新增评论数</b>
+            <div class="spannel_box">
+              <el-row type="flex">
+                <el-col>
+                  <em>123</em>
+                  <b>日新增评论数</b>
+                </el-col>
+                <el-col>
+                  <div class="icon_box">
+                    <i
+                      class="el-icon-chat-square"
+                      style="font-size: 24px; color: #4f81ff; margin: 16px 0"
+                    ></i>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
           </div>
         </el-col>
       </el-row>
@@ -67,36 +123,36 @@ export default {
       // 绘制面积图表
       // 数据源(模拟后台返回的数据)
       const aListAll = [
-        { count: 36, date: '2019-04-13' },
-        { count: 52, date: '2019-04-14' },
-        { count: 78, date: '2019-04-15' },
-        { count: 85, date: '2019-04-16' },
-        { count: 65, date: '2019-04-17' },
-        { count: 72, date: '2019-04-18' },
-        { count: 88, date: '2019-04-19' },
-        { count: 64, date: '2019-04-20' },
-        { count: 72, date: '2019-04-21' },
-        { count: 90, date: '2019-04-22' },
-        { count: 96, date: '2019-04-23' },
-        { count: 100, date: '2019-04-24' },
-        { count: 102, date: '2019-04-25' },
-        { count: 110, date: '2019-04-26' },
-        { count: 123, date: '2019-04-27' },
-        { count: 100, date: '2019-04-28' },
-        { count: 132, date: '2019-04-29' },
-        { count: 146, date: '2019-04-30' },
-        { count: 200, date: '2019-05-01' },
-        { count: 180, date: '2019-05-02' },
-        { count: 163, date: '2019-05-03' },
-        { count: 110, date: '2019-05-04' },
-        { count: 80, date: '2019-05-05' },
-        { count: 82, date: '2019-05-06' },
-        { count: 70, date: '2019-05-07' },
-        { count: 65, date: '2019-05-08' },
-        { count: 54, date: '2019-05-09' },
-        { count: 40, date: '2019-05-10' },
-        { count: 45, date: '2019-05-11' },
-        { count: 38, date: '2019-05-12' }
+        { count: 36, date: '2022-04-13' },
+        { count: 52, date: '2022-04-14' },
+        { count: 78, date: '2022-04-15' },
+        { count: 85, date: '2022-04-16' },
+        { count: 65, date: '2022-04-17' },
+        { count: 72, date: '2022-04-18' },
+        { count: 88, date: '2022-04-19' },
+        { count: 64, date: '2022-04-20' },
+        { count: 72, date: '2022-04-21' },
+        { count: 90, date: '2022-04-22' },
+        { count: 96, date: '2022-04-23' },
+        { count: 100, date: '2022-04-24' },
+        { count: 102, date: '2022-04-25' },
+        { count: 110, date: '2022-04-26' },
+        { count: 123, date: '2022-04-27' },
+        { count: 100, date: '2022-04-28' },
+        { count: 132, date: '2022-04-29' },
+        { count: 146, date: '2022-04-30' },
+        { count: 200, date: '2022-05-01' },
+        { count: 180, date: '2022-05-02' },
+        { count: 163, date: '2022-05-03' },
+        { count: 110, date: '2022-05-04' },
+        { count: 80, date: '2022-05-05' },
+        { count: 82, date: '2022-05-06' },
+        { count: 70, date: '2022-05-07' },
+        { count: 65, date: '2022-05-08' },
+        { count: 54, date: '2022-05-09' },
+        { count: 40, date: '2022-05-10' },
+        { count: 45, date: '2022-05-11' },
+        { count: 38, date: '2022-05-12' }
       ]
 
       // 但是图标要求直接给数字的值, 所以要把对象的值取出来形成2个只有值的数组
@@ -108,6 +164,45 @@ export default {
         aDate.push(aListAll[i].date)
       }
 
+      // RGB2HEX
+      function rgbToHex (r, g, b) {
+        const hex = ((r << 16) | (g << 8) | b).toString(16)
+        return '#' + new Array(Math.abs(hex.length - 7)).join('0') + hex
+      }
+
+      // HEX2RGB
+      function hexToRgb (hex) {
+        const rgb = []
+        for (let i = 1; i < 7; i += 2) {
+          rgb.push(parseInt('0x' + hex.slice(i, i + 2)))
+        }
+        return rgb
+      }
+
+      // 渐变色计算
+      function gradient (startColor, endColor, step) {
+        // 将hex转换为rgb
+        const sColor = hexToRgb(startColor)
+        const eColor = hexToRgb(endColor)
+
+        // 计算R\G\B每一步的差值
+        const rStep = (eColor[0] - sColor[0]) / step
+        const gStep = (eColor[1] - sColor[1]) / step
+        const bStep = (eColor[2] - sColor[2]) / step
+
+        const gradientColorArr = []
+        for (let i = 0; i < step; i++) {
+          // 计算每一步的hex值
+          gradientColorArr.push(
+            rgbToHex(
+              parseInt(rStep * i + sColor[0]),
+              parseInt(gStep * i + sColor[1]),
+              parseInt(bStep * i + sColor[2])
+            )
+          )
+        }
+        return gradientColorArr
+      }
       // 面积图的echarts配置项(参考文档复制)
       const chartopt = {
         title: {
@@ -158,8 +253,52 @@ export default {
             name: '新增文章',
             type: 'line', // 折线图
             smooth: true, // 是否平滑视觉引导线，默认不平滑，可以设置成 true 平滑显示
-            areaStyle: { type: 'default' }, // 区域填充样式。设置后显示成区域面积图。
-            itemStyle: { color: '#f80', lineStyle: { color: '#f80' } }, // 折线拐点标志的样式。
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#7089E9' // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: '#FFFFFF' // 100% 处的颜色
+                  }
+                ],
+                global: false // 缺省为 false
+              }
+            }, // 区域填充样式。设置后显示成区域面积图。
+            lineStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 1,
+                y2: 0,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#9DECE1' // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: '#646EEB' // 100% 处的颜色
+                  }
+                ],
+                global: false // 缺省为 false
+              }
+            }, // 折线拐点标志的样式。
+            itemStyle: {
+              color: (params) =>
+                gradient('#9DECE1', '#646EEB', aListAll.length)[
+                  params.dataIndex
+                ]
+            },
             data: aCount // 真正数据源(用下标和x轴数组对应)
           }
         ],
@@ -186,13 +325,13 @@ export default {
         },
         tooltip: {
           trigger: 'item', // 在图形上才会触发提示
-          formatter: '{a} <br/>{b} : {c} ({d}%)' // 提示的文字显示的格式
+          formatter: '{b} : {c} ({d}%)' // 提示的文字显示的格式
           // a: 系列名
           // b: 数据名
           // c: 数值
           // d: 百分比 (只有饼状图生效)
         },
-        color: ['#5885e8', '#13cfd5', '#00ce68', '#ff9565'], // 系列颜色
+        color: ['#7DBFFF', '#5482FA', '#586EE6', '#68DEB3'], // 系列颜色
         legend: {
           // 图例组件
           x: 'center',
@@ -227,7 +366,12 @@ export default {
           {
             name: '访问来源',
             type: 'pie',
-            radius: ['45%', '60%'],
+            radius: ['40%', '60%'],
+            itemStyle: {
+              borderRadius: 6,
+              borderColor: '#fff',
+              borderWidth: 2
+            },
             center: ['50%', '65%'],
             data: [
               { value: 300, name: '奇趣事' },
@@ -285,7 +429,7 @@ export default {
             barWidth: 20,
             areaStyle: { type: 'default' },
             itemStyle: {
-              color: '#fd956a'
+              color: '#7DBFFF'
             },
             data: [800, 708, 920, 1090, 1200]
           },
@@ -295,7 +439,7 @@ export default {
             barWidth: 20,
             areaStyle: { type: 'default' },
             itemStyle: {
-              color: '#2bb6db'
+              color: '#5482FA'
             },
             data: [400, 468, 520, 690, 800]
           },
@@ -305,7 +449,7 @@ export default {
             barWidth: 20,
             areaStyle: { type: 'default' },
             itemStyle: {
-              color: '#13cfd5'
+              color: '#586EE6'
             },
             data: [500, 668, 520, 790, 900]
           },
@@ -315,7 +459,7 @@ export default {
             barWidth: 20,
             areaStyle: { type: 'default' },
             itemStyle: {
-              color: '#00ce68'
+              color: '#68DEB3'
             },
             data: [600, 508, 720, 890, 1000]
           }
@@ -365,19 +509,35 @@ export default {
 .spannel {
   height: 100px;
   overflow: hidden;
-  text-align: center;
   position: relative;
   background-color: #fff;
-  border: 1px solid #e7e7e9;
   margin-bottom: 20px;
+}
+
+.spannel_box {
+  margin: 20px 0;
+  border-right: 1px solid #d7dbec;
+}
+
+.spannel.scolor03 .spannel_box {
+  border: none;
+}
+
+.icon_box {
+  margin: 2px 40px;
+  width: 56px;
+  height: 56px;
+  text-align: center;
+  border-radius: 28px;
+  background: #ecf2fe;
 }
 
 .spannel em {
   font-style: normal;
-  font-size: 50px;
-  line-height: 50px;
+  font-size: 25px;
+  line-height: 25px;
   display: inline-block;
-  margin: 10px 0 0 20px;
+  margin: 10px 0 0 40px;
   font-family: "Arial";
   color: #83a2ed;
 }
@@ -390,13 +550,13 @@ export default {
 }
 
 .spannel b {
-  position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
   line-height: 24px;
-  background: #e5e5e5;
-  color: #333;
+  display: inline-block;
+  margin: 0 0 0 40px;
+  color: #5a607f;
   font-size: 14px;
   font-weight: normal;
 }

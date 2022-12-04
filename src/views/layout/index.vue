@@ -7,6 +7,7 @@
 
       <!-- 右侧的菜单 -->
       <el-menu
+        :default-active="$route.path + /\s/"
         mode="horizontal"
         background-color="#23262E"
         text-color="#FFFFFF"
@@ -45,7 +46,7 @@
         </template>
 
         <!-- 退出登录 -->
-        <el-menu-item @click="dialogVisible = true">
+        <el-menu-item @click="dialogVisible = true" index="4">
           <i class="el-icon-switch-button"></i>
           <span>退出</span>
         </el-menu-item>
