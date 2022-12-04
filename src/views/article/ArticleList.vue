@@ -80,6 +80,23 @@
       >
       </el-pagination>
     </el-card>
+    <el-dialog :visible.sync="dialogVisible">
+      <div slot="title">
+        <p style="display: flex; align-items: center; line-height: 1">
+          <i class="el-icon-info"></i>
+          <span>提示</span>
+        </p>
+      </div>
+      <span style="margin-left: 32px">确定要删除本条信息吗？</span>
+      <div slot="footer" class="dialog-footer">
+        <el-button class="dlgBtn" type="info" @click="dialogVisible = false"
+          >取消</el-button
+        >
+        <el-button class="dlgBtn" type="danger" @click="deleteArticle"
+          >确定</el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -96,7 +113,9 @@ export default {
         pagenum: 1,
         cate_id: '',
         state: ''
-      }
+      },
+      dialogVisible: false,
+      id: ''
     }
   },
   async created () {
@@ -112,17 +131,17 @@ export default {
   methods: {
     ...mapActions(['cate/getCateList', 'article/getArticleList']),
     submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert('submit!')
+          await this.getArticleList()
         } else {
-          console.log('error submit!!')
           return false
         }
       })
     },
-    resetForm (formName) {
+    async resetForm (formName) {
       this.$refs[formName].resetFields()
+      await this.getArticleList()
     },
     handleAdd () {
       this.$router.push('/edit')
@@ -130,9 +149,15 @@ export default {
     handleEdit (row) {
       this.$router.push({ path: '/edit', query: { id: row.id } })
     },
-    async handleDelete (row) {
-      await infoArticle({ id: row.id, method: 'delete' })
+    handleDelete (row) {
+      this.dialogVisible = true
+      this.id = row.id
+    },
+    async deleteArticle () {
+      await infoArticle({ id: this.id, method: 'delete' })
       await this.getArticleList()
+      this.dialogVisible = false
+      this.id = ''
     },
     async getArticleList () {
       const params = this.params
@@ -233,5 +258,36 @@ export default {
   padding-left: 24px !important;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.4);
+}
+
+/deep/ .el-dialog {
+  width: 410px;
+
+  .el-dialog__header {
+    .el-icon-info {
+      margin-right: 8px;
+      font-size: 24px;
+      color: #4f81ff;
+    }
+
+    .el-dialog__headerbtn:focus .el-dialog__close,
+    .el-dialog__headerbtn:hover .el-dialog__close {
+      color: rgba(0, 0, 0, 0.4);
+    }
+
+    span {
+      margin-bottom: 1px;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.9);
+    }
+  }
+
+  .dlgBtn {
+    padding: 0 16px;
+    height: 32px;
+    font-size: 14px;
+    line-height: 32px;
+  }
 }
 </style>

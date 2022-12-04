@@ -10,9 +10,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 // 引入全局样式
 import '@/assets/global.less'
 
-// SVG
-import '@/icons'
-
 // 引入导航守卫
 import '@/permission'
 

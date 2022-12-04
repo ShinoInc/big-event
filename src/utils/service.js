@@ -28,7 +28,9 @@ service.interceptors.response.use(
         ![
           '获取用户基本信息成功！',
           '获取文章分类列表成功！',
-          '获取文章列表成功！'
+          '获取文章列表成功！',
+          '获取文章成功！',
+          '获取左侧菜单成功！'
         ].includes(message)
       ) {
         Message.success(message)

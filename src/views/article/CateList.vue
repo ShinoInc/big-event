@@ -64,7 +64,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button class="dlgBtn" type="info" @click="cancel">取消</el-button>
-        <el-button class="dlgBtn" type="primary" @click="submitCate">{{
+        <el-button class="dlgBtn" :type="submitType" @click="submitCate">{{
           dialogFooter
         }}</el-button>
       </div>
@@ -84,6 +84,7 @@ export default {
       dialogTitle: '',
       isDel: false,
       dialogFooter: '',
+      submitType: '',
       submitCate: '',
       data: {
         cate_name: '',
@@ -128,12 +129,14 @@ export default {
     handleAdd () {
       this.dialogTitle = '添加分类'
       this.dialogFooter = '添加'
+      this.submitType = 'primary'
       this.submitCate = this.addCate
       this.cateDialog = true
     },
     handleInfo (row) {
       this.dialogTitle = '修改文章分类'
       this.dialogFooter = '确认修改'
+      this.submitType = 'primary'
       this.submitCate = this.infoCate
       this.cateDialog = true
       this.$nextTick(() => {
@@ -146,6 +149,7 @@ export default {
       this.dialogTitle = '提示'
       this.isDel = true
       this.dialogFooter = '确认删除'
+      this.submitType = 'danger'
       this.submitCate = this.delCate
       this.cateDialog = true
       this.$nextTick(() => {
@@ -154,14 +158,18 @@ export default {
     },
     cancel () {
       this.cateDialog = false
-      this.$refs.addCate.resetFields()
+      if (this.$refs.addCate) {
+        this.$refs.addCate.resetFields()
+      }
     },
     addCate () {
       this.$refs.addCate.validate(async (valid) => {
         if (valid) {
           await addCate(this.data)
           this.cateDialog = false
-          this.$refs.addCate.resetFields()
+          if (this.$refs.addCate) {
+            this.$refs.addCate.resetFields()
+          }
           await this['cate/getCateList']()
         }
       })
@@ -173,7 +181,9 @@ export default {
           data.id = this.cate_id
           await infoCate({ method: 'put', data })
           this.cateDialog = false
-          this.$refs.addCate.resetFields()
+          if (this.$refs.addCate) {
+            this.$refs.addCate.resetFields()
+          }
           await this['cate/getCateList']()
         }
       })
@@ -209,6 +219,7 @@ export default {
   background-color: #4f81ff;
   border-color: #4f81ff;
 
+  &:focus,
   &:hover {
     background-color: #608dff;
     border-color: #608dff;
@@ -220,6 +231,7 @@ export default {
   border-color: #eaecf5;
   color: rgba(0, 0, 0, 0.9);
 
+  &:focus,
   &:hover {
     background-color: #f5f6fa;
     border-color: #f5f6fa;
@@ -230,6 +242,7 @@ export default {
   background-color: #f46c6c;
   border-color: #f46c6c;
 
+  &:focus,
   &:hover {
     background-color: #f38484;
     border-color: #f38484;
@@ -250,6 +263,11 @@ export default {
       margin-right: 8px;
       font-size: 24px;
       color: #4f81ff;
+    }
+
+    .el-dialog__headerbtn:focus .el-dialog__close,
+    .el-dialog__headerbtn:hover .el-dialog__close {
+      color: rgba(0, 0, 0, 0.4);
     }
 
     span {

@@ -14,38 +14,59 @@
         router
       >
         <!-- 个人中心 -->
-        <el-submenu index="TabUser">
-          <template #title>
-            <el-avatar
-              v-if="user_pic"
-              class="avatar"
-              :src="user_pic"
-            ></el-avatar>
-            <el-avatar v-else class="avatar">{{
-              nickname ? nickname : username
-            }}</el-avatar>
-            <span>个人中心</span>
-          </template>
-          <el-menu-item index="/userinfo">
-            <svg-icon icon-class="user_info"></svg-icon>
-            <span>基本资料</span>
-          </el-menu-item>
-          <el-menu-item index="/userpic">
-            <svg-icon icon-class="user_pic"></svg-icon>
-            <span>更换头像</span>
-          </el-menu-item>
-          <el-menu-item index="/userpwd">
-            <svg-icon icon-class="user_pwd"></svg-icon>
-            <span>重置密码</span>
-          </el-menu-item>
-        </el-submenu>
+        <!-- 包含子菜单的“一级菜单” -->
+        <template v-for="(value, index) in menus">
+          <el-submenu
+            v-if="value.title === '个人中心'"
+            :key="index"
+            :index="value.indexPath"
+          >
+            <template #title>
+              <el-avatar
+                v-if="user_pic"
+                class="avatar"
+                :src="user_pic"
+              ></el-avatar>
+              <el-avatar v-else class="avatar">{{
+                nickname ? nickname : username
+              }}</el-avatar>
+              <span>{{ value.title }}</span>
+            </template>
+            <!-- 循环渲染“二级菜单” -->
+            <el-menu-item
+              v-for="(child, childIndex) in value.children"
+              :key="childIndex"
+              :index="child.indexPath"
+            >
+              <i :class="child.icon"></i>
+              <span>{{ child.title }}</span>
+            </el-menu-item>
+          </el-submenu>
+        </template>
 
         <!-- 退出登录 -->
-        <el-menu-item @click="logout">
-          <svg-icon icon-class="logout"></svg-icon>
+        <el-menu-item @click="dialogVisible = true">
+          <i class="el-icon-switch-button"></i>
           <span>退出</span>
         </el-menu-item>
       </el-menu>
+      <el-dialog :visible.sync="dialogVisible">
+        <div slot="title">
+          <p style="display: flex; align-items: center; line-height: 1">
+            <i class="el-icon-info"></i>
+            <span>提示</span>
+          </p>
+        </div>
+        <span style="margin-left: 32px">确定要退出登录吗？</span>
+        <div slot="footer" class="dialog-footer">
+          <el-button class="dlgBtn" type="info" @click="dialogVisible = false"
+            >取消</el-button
+          >
+          <el-button class="dlgBtn" type="primary" @click="logout"
+            >确定</el-button
+          >
+        </div>
+      </el-dialog>
     </el-header>
     <el-container>
       <!-- 左侧边栏的用户信息 -->
@@ -68,49 +89,38 @@
           router
         >
           <!-- 不包含子菜单的“一级菜单” -->
-          <el-menu-item index="/home">
-            <svg-icon icon-class="home"></svg-icon>
-            <span>首页</span>
-          </el-menu-item>
-
+          <template v-for="(value, index) in menus">
+            <el-menu-item
+              v-if="!value.children"
+              :key="index"
+              :index="value.indexPath"
+            >
+              <i :class="value.icon"></i>
+              <span>{{ value.title }}</span>
+            </el-menu-item>
+          </template>
           <!-- 包含子菜单的“一级菜单” -->
-          <el-submenu index="Article">
-            <!-- 循环渲染“二级菜单” -->
-            <template #title>
-              <svg-icon icon-class="article"></svg-icon>
-              <span>文章管理</span>
-            </template>
-            <el-menu-item index="/cate">
-              <svg-icon icon-class="article_cate"></svg-icon>
-              <span>文章分类</span>
-            </el-menu-item>
-            <el-menu-item index="/article">
-              <svg-icon icon-class="article_list"></svg-icon>
-              <span>文章列表</span>
-            </el-menu-item>
-            <el-menu-item index="/edit">
-              <svg-icon icon-class="article_info"></svg-icon>
-              <span>发表文章</span>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="User">
-            <template #title>
-              <svg-icon icon-class="user"></svg-icon>
-              <span>个人中心</span>
-            </template>
-            <el-menu-item index="/userinfo">
-              <svg-icon icon-class="user_info"></svg-icon>
-              <span>基本资料</span>
-            </el-menu-item>
-            <el-menu-item index="/userpic">
-              <svg-icon icon-class="user_pic"></svg-icon>
-              <span>更换头像</span>
-            </el-menu-item>
-            <el-menu-item index="/userpwd">
-              <svg-icon icon-class="user_pwd"></svg-icon>
-              <span>重置密码</span>
-            </el-menu-item>
-          </el-submenu>
+          <template v-for="(value, index) in menus">
+            <el-submenu
+              v-if="value.children"
+              :key="index"
+              :index="value.indexPath"
+            >
+              <template #title>
+                <i :class="value.icon"></i>
+                <span>{{ value.title }}</span>
+              </template>
+              <!-- 循环渲染“二级菜单” -->
+              <el-menu-item
+                v-for="(child, childIndex) in value.children"
+                :key="childIndex"
+                :index="child.indexPath"
+              >
+                <i :class="child.icon"></i>
+                <span>{{ child.title }}</span>
+              </el-menu-item>
+            </el-submenu>
+          </template>
         </el-menu>
       </el-aside>
 
@@ -132,10 +142,12 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'my-layout',
   computed: {
-    ...mapGetters(['username', 'nickname', 'user_pic'])
+    ...mapGetters(['username', 'nickname', 'user_pic', 'menus'])
   },
   data () {
-    return {}
+    return {
+      dialogVisible: false
+    }
   },
   created () {},
   methods: {
@@ -230,17 +242,62 @@ export default {
   }
 }
 
-.svg-icon {
-  position: relative;
-  top: 5px;
-  width: 32px;
-  height: 24px;
-}
-
 .el-header {
   /deep/ .el-menu-item,
   /deep/ .el-submenu__title {
     font-size: 15px;
+  }
+}
+
+/deep/ .el-dialog {
+  width: 410px;
+
+  .el-dialog__header {
+    .el-icon-info {
+      margin-right: 8px;
+      font-size: 24px;
+      color: #4f81ff;
+    }
+
+    .el-dialog__headerbtn:focus .el-dialog__close,
+    .el-dialog__headerbtn:hover .el-dialog__close {
+      color: rgba(0, 0, 0, 0.4);
+    }
+
+    span {
+      margin-bottom: 1px;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.9);
+    }
+  }
+
+  .dlgBtn {
+    padding: 0 16px;
+    height: 32px;
+    font-size: 14px;
+    line-height: 32px;
+  }
+}
+
+.el-button--primary {
+  background-color: #4f81ff;
+  border-color: #4f81ff;
+
+  &:hover {
+    background-color: #608dff;
+    border-color: #608dff;
+  }
+}
+
+.el-button--info {
+  background-color: #eaecf5;
+  border-color: #eaecf5;
+  color: rgba(0, 0, 0, 0.9);
+
+  &:hover {
+    background-color: #f5f6fa;
+    border-color: #f5f6fa;
   }
 }
 </style>

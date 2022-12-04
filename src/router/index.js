@@ -22,11 +22,11 @@ const routes = [
         component: () => import('@/views/home')
       },
       {
-        path: 'cate',
+        path: 'art-cate',
         component: () => import('@/views/article/CateList')
       },
       {
-        path: 'article',
+        path: 'art-list',
         component: () => import('@/views/article/ArticleList')
       },
       {
@@ -34,15 +34,15 @@ const routes = [
         component: () => import('@/views/article/ArticleEditor')
       },
       {
-        path: 'userinfo',
+        path: 'user-info',
         component: () => import('@/views/user/UserInfo')
       },
       {
-        path: 'userpic',
+        path: 'user-avatar',
         component: () => import('@/views/user/UserPic')
       },
       {
-        path: 'userpwd',
+        path: 'user-pwd',
         component: () => import('@/views/user/UserPwd')
       }
     ]

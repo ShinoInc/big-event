@@ -5,6 +5,9 @@
         <span style="font-size: 16px; font-weight: 500; line-height: 40px"
           >发表文章</span
         >
+        <el-button class="clsBtn" type="text" @click="dialogVisible = true"
+          >X</el-button
+        >
       </div>
       <el-form
         ref="editForm"
@@ -39,11 +42,6 @@
           />
         </el-form-item>
         <el-form-item label="文章封面" prop="cover_img">
-          <el-image
-            :src="editForm.cover_img ? editForm.cover_img : baseUrl"
-            fit="cover"
-            style="width: 320px; height: 200px"
-          ></el-image>
           <el-upload
             action=""
             accept="image/*"
@@ -51,12 +49,15 @@
             :on-change="onChange"
             :auto-upload="false"
             :file-list="fileList"
+            style="margin-bottom: 5px"
           >
-            <div slot="trigger">
-              <i class="el-icon-plus"></i>
-              <span>选择封面</span>
-            </div>
+            <el-button slot="trigger" class="submitBtn">选择封面</el-button>
           </el-upload>
+          <el-image
+            :src="editForm.cover_img ? editForm.cover_img : baseUrl"
+            fit="cover"
+            style="width: 320px; height: 200px"
+          ></el-image>
         </el-form-item>
         <el-form-item>
           <el-button
@@ -74,6 +75,25 @@
         </el-form-item>
       </el-form>
     </el-card>
+    <el-dialog :visible.sync="dialogVisible">
+      <div slot="title">
+        <p style="display: flex; align-items: center; line-height: 1">
+          <i class="el-icon-info"></i>
+          <span>提示</span>
+        </p>
+      </div>
+      <span style="margin-left: 32px"
+        >此操作将导致文章信息丢失，是否继续？</span
+      >
+      <div slot="footer" class="dialog-footer">
+        <el-button class="dlgBtn" type="info" @click="dialogVisible = false"
+          >取消</el-button
+        >
+        <el-button class="dlgBtn" type="danger" @click="clsEditor"
+          >确定</el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -101,7 +121,7 @@ export default {
         id: '',
         title: '',
         cate_id: '',
-        content: '这里可以填写内容',
+        content: '',
         cover_img: ''
       },
       rules: {
@@ -126,7 +146,9 @@ export default {
       },
       editorOption: {
         // Some Quill options...
-      }
+        placeholder: '这里可以填写内容'
+      },
+      dialogVisible: false
     }
   },
   async created () {
@@ -151,6 +173,9 @@ export default {
   },
   methods: {
     ...mapActions(['cate/getCateList']),
+    clsEditor () {
+      this.$router.push('/art-list')
+    },
     onChange (files, fileList) {
       if (fileList.length > 1) {
         fileList.splice(0, 1)
@@ -164,8 +189,11 @@ export default {
     },
     handleRemove (file, fileList) {
       this.editForm.cover_img = ''
+      this.$refs.editForm.validateField('cover_img')
     },
-    onEditorBlur (quill) {},
+    onEditorBlur (quill) {
+      this.$refs.editForm.validateField('content')
+    },
     onEditorFocus (quill) {},
     onEditorReady (quill) {},
     onEditorChange ({ quill, html, text }) {
@@ -189,7 +217,7 @@ export default {
           } else {
             await addArticle(this.data)
           }
-          this.$router.push('/article')
+          this.$router.push('/art-list')
         } else {
           return false
         }
@@ -200,6 +228,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.clsBtn {
+  padding: 0;
+  float: right;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  line-height: 32px;
+  color: rgba(0, 0, 0, 0.9);
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.4);
+  }
+}
+
 .el-form-item {
   /deep/ .el-form-item__label {
     font-size: 14px;
@@ -215,6 +257,10 @@ export default {
     font-size: 14px;
     color: rgba(0, 0, 0, 0.9);
   }
+}
+
+/deep/ .el-upload-list__item:first-child {
+  margin-top: 0 !important;
 }
 
 .el-select-dropdown__item.hover,
@@ -244,10 +290,52 @@ export default {
   }
 }
 
+.el-button--danger {
+  background-color: #f46c6c;
+  border-color: #f46c6c;
+
+  &:focus,
+  &:hover {
+    background-color: #f38484;
+    border-color: #f38484;
+  }
+}
+
 .submitBtn {
   padding: 0 16px;
   height: 32px;
   font-size: 14px;
   line-height: 32px;
+}
+
+/deep/ .el-dialog {
+  width: 410px;
+
+  .el-dialog__header {
+    .el-icon-info {
+      margin-right: 8px;
+      font-size: 24px;
+      color: #4f81ff;
+    }
+
+    .el-dialog__headerbtn:focus .el-dialog__close,
+    .el-dialog__headerbtn:hover .el-dialog__close {
+      color: rgba(0, 0, 0, 0.4);
+    }
+
+    span {
+      margin-bottom: 1px;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.9);
+    }
+  }
+
+  .dlgBtn {
+    padding: 0 16px;
+    height: 32px;
+    font-size: 14px;
+    line-height: 32px;
+  }
 }
 </style>

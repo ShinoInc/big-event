@@ -27,6 +27,7 @@ export default {
     async login (context, data) {
       const token = await login(data)
       context.commit('setToken', token)
+      context.dispatch('menus/getMenus', {}, { root: true })
     },
     async getUserInfo (context) {
       const userInfo = await getUserInfo()
@@ -35,7 +36,7 @@ export default {
     logout (context) {
       context.commit('removeToken')
       context.commit('removeUserInfo')
-      context.commit('removeUserMenus')
+      context.commit('menus/removeMenus', {}, { root: true })
     }
   }
 }
