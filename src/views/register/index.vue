@@ -1,6 +1,10 @@
 <template>
   <div id="register">
-    <el-image class="logo" :src="require('@/assets/images/login_logo.png')" fit="contain"></el-image>
+    <el-image
+      class="logo"
+      :src="require('@/assets/images/login_logo.png')"
+      fit="contain"
+    ></el-image>
     <el-card class="reg-card" shadow="always">
       <h2>后台管理系统</h2>
       <p class="link">
@@ -11,22 +15,45 @@
           <template #label>
             <span class="iptLabel">用户名</span>
           </template>
-          <el-input type="text" v-model="regForm.username" placeholder="请输入用户名"></el-input>
+          <el-input
+            type="text"
+            v-model="regForm.username"
+            placeholder="请输入用户名"
+            @keyup.enter.native="upEnter($event, 'register')"
+          ></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <template #label>
             <span class="iptLabel">密码</span>
           </template>
-          <el-input type="password" v-model="regForm.password" placeholder="请输入密码"></el-input>
+          <el-input
+            type="password"
+            v-model="regForm.password"
+            placeholder="请输入密码"
+            @keyup.enter.native="upEnter($event, 'register')"
+          ></el-input>
         </el-form-item>
         <el-form-item prop="repassword">
           <template #label>
             <span class="iptLabel">密码</span>
           </template>
-          <el-input type="password" v-model="regForm.repassword" placeholder="请再次输入密码"></el-input>
+          <el-input
+            type="password"
+            v-model="regForm.repassword"
+            placeholder="请再次输入密码"
+            @keyup.enter.native="upEnter($event, 'register')"
+          ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="btnSubmit" type="primary" :loading="loading" @click="register">注册</el-button>
+          <el-button
+            ref="register"
+            class="btnSubmit"
+            type="primary"
+            :loading="loading"
+            @click="register"
+            @keyup.enter.native="register"
+            >注册</el-button
+          >
         </el-form-item>
       </el-form>
     </el-card>
@@ -56,16 +83,35 @@ export default {
       rules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
-          { pattern: /^[A-Za-z0-9]+$/, message: '用户名只能包含字母和数字，请重新输入', trigger: 'change' },
-          { min: 1, max: 10, message: '用户名长度应在1-10位字符之间，请重新输入', trigger: 'blur' }
+          {
+            pattern: /^[A-Za-z0-9]+$/,
+            message: '用户名只能包含字母和数字，请重新输入',
+            trigger: 'change'
+          },
+          {
+            min: 1,
+            max: 10,
+            message: '用户名长度应在1-10位字符之间，请重新输入',
+            trigger: 'blur'
+          }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 15, message: '密码长度应在6-15位字符之间，请重新输入', trigger: 'blur' }
+          {
+            min: 6,
+            max: 15,
+            message: '密码长度应在6-15位字符之间，请重新输入',
+            trigger: 'blur'
+          }
         ],
         repassword: [
           { required: true, message: '请输入确认密码', trigger: 'blur' },
-          { min: 6, max: 15, message: '确认密码长度应在6-15位字符之间，请重新输入', trigger: 'blur' },
+          {
+            min: 6,
+            max: 15,
+            message: '确认密码长度应在6-15位字符之间，请重新输入',
+            trigger: 'blur'
+          },
           { validator: validateRepassword, trigger: 'blur' }
         ]
       },
@@ -74,17 +120,21 @@ export default {
   },
   methods: {
     register () {
-      this.$refs.regForm.validate(async valid => {
+      this.$refs.regForm.validate(async (valid) => {
         if (valid) {
           this.loading = true
-          const { code, message } = await register(this.regForm)
-          if (code === 0) {
+          try {
+            await register(this.regForm)
             this.$router.push('/login')
+          } finally {
+            this.loading = false
           }
-          this.$message(message)
-          this.loading = false
         }
       })
+    },
+    upEnter (event, ref) {
+      event.target.blur()
+      this.$refs[ref].$el.click()
     }
   }
 }
@@ -97,7 +147,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
-  background: url('@/assets/images/login_bg.jpg') 100% no-repeat;
+  background: url("@/assets/images/login_bg.jpg") 100% no-repeat;
   background-size: 100%;
 
   .logo {
@@ -121,32 +171,32 @@ export default {
 
       a {
         text-decoration: none;
-        color: #1E5EFF;
+        color: #1e5eff;
 
         &:hover {
-          color: #4F81FF;
+          color: #4f81ff;
         }
       }
     }
 
     .iptLabel {
       font-size: 14px;
-      color: #5A607F;
+      color: #5a607f;
     }
 
     & :focus {
-      border-color: #1E5EFF !important;
+      border-color: #1e5eff !important;
     }
 
     .btnSubmit {
       width: 100%;
-      background-color: #4F81FF;
-      border-color: #4F81FF;
+      background-color: #4f81ff;
+      border-color: #4f81ff;
       font-size: 16px;
 
       &:hover {
-        background-color: #608DFF;
-        border-color: #608DFF;
+        background-color: #608dff;
+        border-color: #608dff;
       }
     }
   }

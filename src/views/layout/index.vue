@@ -3,16 +3,17 @@
     <!-- 头部区域 -->
     <el-header>
       <!-- 左侧的 logo -->
-      <img src="../../assets/images/logo.png" alt="" />
+      <img :src="require('@/assets/images/logo.png')" alt="" />
 
       <!-- 右侧的菜单 -->
       <el-menu
-        :default-active="$route.path + /\s/"
+        ref="tabMenu"
         mode="horizontal"
         background-color="#23262E"
         text-color="#FFFFFF"
         active-text-color="#409EFF"
         router
+        @select="tabMenuSelect"
       >
         <!-- 个人中心 -->
         <!-- 包含子菜单的“一级菜单” -->
@@ -46,7 +47,7 @@
         </template>
 
         <!-- 退出登录 -->
-        <el-menu-item @click="dialogVisible = true" index="4">
+        <el-menu-item @click="dialogVisible = true">
           <i class="el-icon-switch-button"></i>
           <span>退出</span>
         </el-menu-item>
@@ -150,12 +151,18 @@ export default {
       dialogVisible: false
     }
   },
-  created () {},
+  mounted () {
+    this.tabMenuSelect()
+  },
   methods: {
     ...mapActions(['user/logout']),
     async logout () {
       await this['user/logout']()
       this.$router.push('/login')
+    },
+    // 禁用右侧菜单高亮
+    tabMenuSelect () {
+      this.$refs.tabMenu.activeIndex = !'null'
     }
   }
 }

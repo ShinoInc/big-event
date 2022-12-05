@@ -17,7 +17,6 @@
             ref="upload"
             action=""
             accept="image/jpeg"
-            :on-preview="handlePreview"
             :on-remove="handleRemove"
             :on-change="onChange"
             :auto-upload="false"
@@ -98,9 +97,6 @@ export default {
     handleRemove (file, fileList) {
       this.avatar.user_pic = ''
       this.$refs.avatar.validateField('user_pic')
-    },
-    handlePreview (file) {
-      console.log(file)
     }
   },
   created () {

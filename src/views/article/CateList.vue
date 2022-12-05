@@ -34,7 +34,7 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <el-dialog :visible.sync="cateDialog">
+    <el-dialog :visible.sync="cateDialog" @closed="closedDlg">
       <div slot="title">
         <p style="display: flex; align-items: center; line-height: 1">
           <i class="el-icon-info"></i>
@@ -47,26 +47,35 @@
         ref="addCate"
         :model="data"
         :rules="rules"
-        label-width="auto"
+        label-width="80px"
       >
         <el-form-item label="分类名称" prop="cate_name">
           <el-input
             v-model="data.cate_name"
             placeholder="请输入名称"
+            @keyup.enter.native="upEnter($event, 'submit')"
           ></el-input>
         </el-form-item>
         <el-form-item label="分类别名" prop="cate_alias">
           <el-input
             v-model="data.cate_alias"
             placeholder="请输入别名"
+            @keyup.enter.native="upEnter($event, 'submit')"
           ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button class="dlgBtn" type="info" @click="cancel">取消</el-button>
-        <el-button class="dlgBtn" :type="submitType" @click="submitCate">{{
-          dialogFooter
-        }}</el-button>
+        <el-button class="dlgBtn" type="info" @click="cateDialog = false"
+          >取消</el-button
+        >
+        <el-button
+          ref="submit"
+          class="dlgBtn"
+          :type="submitType"
+          @click="submitCate"
+          @keyup.enter.native="submitCate"
+          >{{ dialogFooter }}</el-button
+        >
       </div>
     </el-dialog>
   </div>
@@ -156,21 +165,20 @@ export default {
         this.cate_id = row.id
       })
     },
-    cancel () {
-      this.cateDialog = false
+    async closedDlg () {
+      if (this.isDel === true) {
+        this.isDel = false
+      }
       if (this.$refs.addCate) {
         this.$refs.addCate.resetFields()
       }
+      await this['cate/getCateList']()
     },
     addCate () {
       this.$refs.addCate.validate(async (valid) => {
         if (valid) {
           await addCate(this.data)
           this.cateDialog = false
-          if (this.$refs.addCate) {
-            this.$refs.addCate.resetFields()
-          }
-          await this['cate/getCateList']()
         }
       })
     },
@@ -181,17 +189,16 @@ export default {
           data.id = this.cate_id
           await infoCate({ method: 'put', data })
           this.cateDialog = false
-          if (this.$refs.addCate) {
-            this.$refs.addCate.resetFields()
-          }
-          await this['cate/getCateList']()
         }
       })
     },
     async delCate () {
       await delCate(this.cate_id)
       this.cateDialog = false
-      await this['cate/getCateList']()
+    },
+    upEnter (event, ref) {
+      event.target.blur()
+      this.$refs[ref].$el.click()
     }
   }
 }

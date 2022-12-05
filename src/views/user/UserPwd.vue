@@ -12,6 +12,7 @@
             type="password"
             v-model="pwdForm.old_pwd"
             placeholder="请输入原密码"
+            @keyup.enter.native="upEnter($event, 'submit')"
           ></el-input>
         </el-form-item>
         <el-form-item label="新密码" prop="new_pwd">
@@ -19,6 +20,7 @@
             type="password"
             v-model="pwdForm.new_pwd"
             placeholder="请输入新密码"
+            @keyup.enter.native="upEnter($event, 'submit')"
           ></el-input>
         </el-form-item>
         <el-form-item label="确认新密码" prop="re_pwd">
@@ -26,13 +28,16 @@
             type="password"
             v-model="pwdForm.re_pwd"
             placeholder="请再次输入新密码"
+            @keyup.enter.native="upEnter($event, 'submit')"
           ></el-input>
         </el-form-item>
         <el-form-item>
           <el-button
+            ref="submit"
             class="submitBtn"
             type="primary"
             @click="submitForm('pwdForm')"
+            @keyup.enter.native="submitForm('pwdForm')"
             >修改密码</el-button
           >
           <el-button class="submitBtn" type="info" @click="resetForm('pwdForm')"
@@ -110,6 +115,7 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           await updatePwd(this.pwdForm)
+          this.resetForm('pwdForm')
         } else {
           return false
         }
@@ -117,6 +123,10 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+    },
+    upEnter (event, ref) {
+      event.target.blur()
+      this.$refs[ref].$el.click()
     }
   }
 }
