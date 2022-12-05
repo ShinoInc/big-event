@@ -9,7 +9,7 @@
       <el-form ref="avatar" :model="avatar" :rules="rules">
         <el-form-item prop="user_pic">
           <el-image
-            :src="user_pic ? user_pic : baseUrl"
+            :src="avatar.user_pic ? avatar.user_pic : baseUrl"
             fit="cover"
             style="width: 320px; height: 320px"
           ></el-image>
@@ -91,8 +91,10 @@ export default {
       const fileReader = new FileReader()
       fileReader.readAsDataURL(files.raw)
       fileReader.onload = (event) => {
+        console.log(event.target.result === this.user_pic)
         this.avatar.user_pic = event.target.result
       }
+      this.$refs.avatar.clearValidate('user_pic')
     },
     handleRemove (file, fileList) {
       this.avatar.user_pic = ''

@@ -54,15 +54,6 @@ import { putUserInfo } from '@/api'
 export default {
   name: 'UserInfo',
   data () {
-    // const isOld = (rule, value, callback) => {
-    //   if (value !== this.userInfo[rule.field]) {
-    //     callback()
-    //   } else {
-    //     const props = { nickname: '昵称', email: '邮箱地址' }
-    //     callback(new Error(`新旧${props[rule.field]}不能相同`))
-    //   }
-    // }
-
     return {
       infoForm: {
         username: '',
@@ -79,7 +70,6 @@ export default {
             message: '用户昵称长度应在1-10位字符之间，请重新输入',
             trigger: 'blur'
           }
-          // { validator: isOld, trigger: 'blur' }
         ],
         email: [
           { required: true, message: '请输入用户邮箱', trigger: 'blur' },
@@ -88,7 +78,6 @@ export default {
             message: '请正确输入邮箱地址',
             trigger: ['blur', 'change']
           }
-          // { validator: isOld, trigger: 'blur' }
         ]
       }
     }
