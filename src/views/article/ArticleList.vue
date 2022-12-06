@@ -166,11 +166,11 @@ export default {
       await this['article/getArticleList'](params)
     },
     async handleSizeChange (val) {
-      this.pagesize = val
+      this.params.pagesize = val
       await this.getArticleList()
     },
     async handleCurrentChange (val) {
-      this.pagenum = val
+      this.params.pagenum = val
       await this.getArticleList()
     }
   }
