@@ -82,6 +82,7 @@
         </div>
         <!-- 左侧导航菜单 -->
         <el-menu
+          ref="leftMenu"
           :default-active="$route.path"
           class="el-menu-vertical-demo"
           background-color="#23262E"
@@ -89,6 +90,7 @@
           active-text-color="#409EFF"
           unique-opened
           router
+          @select="leftMenuSelect"
         >
           <!-- 不包含子菜单的“一级菜单” -->
           <template v-for="(value, index) in menus">
@@ -163,6 +165,12 @@ export default {
     // 禁用右侧菜单高亮
     tabMenuSelect () {
       this.$refs.tabMenu.activeIndex = !'null'
+    },
+    leftMenuSelect (index) {
+      if (index === '/home') {
+        this.$refs.leftMenu.close('2')
+        this.$refs.leftMenu.close('3')
+      }
     }
   }
 }

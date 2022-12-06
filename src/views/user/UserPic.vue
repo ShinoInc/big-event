@@ -91,7 +91,6 @@ export default {
       const fileReader = new FileReader()
       fileReader.readAsDataURL(files.raw)
       fileReader.onload = (event) => {
-        console.log(event.target.result === this.user_pic)
         this.avatar.user_pic = event.target.result
       }
       this.$refs.avatar.clearValidate('user_pic')
