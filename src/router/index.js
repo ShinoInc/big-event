@@ -30,10 +30,6 @@ const routes = [
         component: () => import('@/views/article/ArticleList')
       },
       {
-        path: 'edit',
-        component: () => import('@/views/article/ArticleEditor')
-      },
-      {
         path: 'user-info',
         component: () => import('@/views/user/UserInfo')
       },

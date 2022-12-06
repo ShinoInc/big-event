@@ -1,6 +1,7 @@
 <template>
   <div id="article">
-    <el-card>
+    <article-editor v-if="$route.hash === '#edit'"></article-editor>
+    <el-card v-else>
       <div slot="header" style="overflow: hidden">
         <span style="font-size: 16px; font-weight: 500; line-height: 40px"
           >文章列表</span
@@ -103,9 +104,13 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import { infoArticle } from '@/api'
+import ArticleEditor from './ArticleEditor'
 
 export default {
   name: 'ArticleView',
+  components: {
+    ArticleEditor
+  },
   data () {
     return {
       params: {
@@ -144,10 +149,10 @@ export default {
       await this.getArticleList()
     },
     handleAdd () {
-      this.$router.push('/edit')
+      this.$router.push({ hash: '#edit' })
     },
     handleEdit (row) {
-      this.$router.push({ path: '/edit', query: { id: row.id } })
+      this.$router.push({ hash: '#edit', query: { id: row.id } })
     },
     handleDelete (row) {
       this.dialogVisible = true
