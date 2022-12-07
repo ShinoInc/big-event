@@ -160,6 +160,13 @@ export default {
     },
     async deleteArticle () {
       await infoArticle({ id: this.id, method: 'delete' })
+      if (
+        this.params.pagenum > 1 &&
+        this.params.pagenum >
+          Math.ceil((this.articleTotal - 1) / this.params.pagesize)
+      ) {
+        this.params.pagenum--
+      }
       await this.getArticleList()
       this.dialogVisible = false
       this.id = ''
