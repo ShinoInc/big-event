@@ -178,6 +178,23 @@ export default {
       this.params.pagenum = val
       await this.getArticleList()
     }
+  },
+  watch: {
+    async $route (to, from) {
+      if (to.hash === '#edit') {
+        Object.assign(this.$data, this.$options.data())
+        await this.getArticleList()
+      }
+      const oldTotal = this.articleTotal
+      if (from.hash === '#edit') {
+        await this.getArticleList()
+        if (this.articleTotal !== oldTotal) {
+          await this.handleCurrentChange(
+            Math.ceil(this.articleTotal / this.params.pagesize)
+          )
+        }
+      }
+    }
   }
 }
 </script>
