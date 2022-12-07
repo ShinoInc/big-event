@@ -265,12 +265,16 @@ export default {
 .el-button--info {
   background-color: #eaecf5;
   border-color: #eaecf5;
-  color: #0052d9;
+  color: rgba(0, 0, 0, 0.9);
 
   &:hover {
     background-color: #f5f6fa;
     border-color: #f5f6fa;
   }
+}
+
+.el-card .el-form .el-button--info {
+  color: #0052d9;
 }
 
 .el-button--danger {
